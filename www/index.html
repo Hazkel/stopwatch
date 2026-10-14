@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Stopwatch minimalis dengan tema terang dan gelap.">
+  <title>Stopwatch</title>
+
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem("stopwatch.theme");
+        const systemPrefersDark = window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const theme = savedTheme === "light" || savedTheme === "dark"
+          ? savedTheme
+          : systemPrefersDark
+            ? "dark"
+            : "light";
+
+        document.documentElement.dataset.theme = theme;
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <script src="world-clock.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <p class="brand">Stopwatch</p>
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        type="button"
+        aria-label="Aktifkan mode gelap"
+        title="Aktifkan mode gelap"
+      >
+        <span class="theme-icon" id="theme-icon" aria-hidden="true">◐</span>
+        <span id="theme-label">Mode gelap</span>
+      </button>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">Pengukur waktu</p>
+      <h1 id="page-title">Fokus pada waktu.</h1>
+      <p class="subtitle">Ukur durasi, catat putaran, simpan hasilnya.</p>
+    </section>
+
+    <section class="panel" aria-label="Stopwatch">
+      <div class="timer-panel">
+        <p class="timer-label">Waktu berjalan</p>
+        <output
+          class="timer"
+          id="time-display"
+          role="timer"
+          aria-label="Waktu stopwatch"
+          aria-live="off"
+        >00:00:00.00</output>
+        <p class="timer-hint">Jam : menit : detik . perseratus detik</p>
+        <div class="status" id="status" role="status" aria-live="polite">
+          Siap dimulai
+        </div>
+      </div>
+
+      <div class="controls" aria-label="Kontrol stopwatch">
+        <button class="button button-primary" id="start-button" type="button">
+          Mulai
+        </button>
+        <button class="button" id="lap-button" type="button" disabled>
+          Putaran
+        </button>
+        <button class="button" id="save-button" type="button" disabled>
+          Simpan hasil
+        </button>
+        <button class="button" id="reset-button" type="button" disabled>
+          Reset
+        </button>
+      </div>
+    </section>
+
+    <section class="panel section" aria-labelledby="laps-title">
+      <div class="section-heading">
+        <h2 id="laps-title">Putaran</h2>
+        <span class="count" id="lap-count">0 putaran</span>
+      </div>
+      <p class="empty-state" id="lap-empty">
+        Putaran yang dicatat akan muncul di sini.
+      </p>
+      <ol class="list" id="lap-list" aria-label="Daftar putaran"></ol>
+    </section>
+
+<section class="panel section world-clock-section" aria-labelledby="world-clock-title">
+  <div class="section-heading">
+    <h2 id="world-clock-title">Jam Dunia</h2>
+    <span class="count">Kota pilihan</span>
+  </div>
+
+  <p class="world-clock-sync" id="world-clock-sync" role="status" aria-live="polite">
+    Belum tersinkron · sementara memakai jam perangkat
+  </p>
+
+  <form class="world-clock-form" id="world-clock-form">
+    <label class="world-clock-label" for="world-clock-search">Cari kota</label>
+    <div class="world-clock-search-row">
+      <input
+        class="world-clock-input"
+        id="world-clock-search"
+        type="search"
+        list="world-clock-city-options"
+        placeholder="Contoh: Tokyo"
+        autocomplete="off"
+      >
+      <datalist id="world-clock-city-options"></datalist>
+      <button class="world-clock-add" type="submit">Tambah kota</button>
+    </div>
+  </form>
+
+  <p class="world-clock-message" id="world-clock-message" aria-live="polite"></p>
+
+  <p class="empty-state" id="world-clock-empty" hidden>
+    Belum ada kota. Cari kota di atas untuk menambahkannya.
+  </p>
+
+  <ol class="world-clock-grid" id="world-clock-list" aria-label="Jam di kota pilihan"></ol>
+</section>
+
+    <section class="panel section" aria-labelledby="history-title">
+      <div class="section-heading">
+        <h2 id="history-title">Riwayat tersimpan</h2>
+        <span class="count" id="history-count">0 hasil</span>
+      </div>
+      <p class="empty-state" id="history-empty">
+        Belum ada hasil yang tersimpan di browser ini.
+      </p>
+      <ol class="list" id="history-list" aria-label="Riwayat stopwatch"></ol>
+    </section>
+
+    <p class="footer">Tema dan riwayat disimpan di browser ini.</p>
+  </main>
+</body>
+</html>

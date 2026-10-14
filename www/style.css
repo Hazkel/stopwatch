@@ -1,0 +1,561 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --page: #f5f5f2;
+  --surface: #ffffff;
+  --text: #111111;
+  --muted: #686868;
+  --subtle: #777777;
+  --border: #deded9;
+  --separator: #e9e9e5;
+  --button-hover: #f1f1ee;
+  --button-primary-hover: #333333;
+  --status-dot: #aaaaaa;
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.04);
+
+  background: var(--page);
+  color: var(--text);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --page: #080808;
+  --surface: #111111;
+  --text: #f5f5f2;
+  --muted: #aaaaaa;
+  --subtle: #999999;
+  --border: #303030;
+  --separator: #292929;
+  --button-hover: #222222;
+  --button-primary-hover: #dddddd;
+  --status-dot: #777777;
+  --shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  background: var(--page);
+  transition: background-color 240ms ease, color 240ms ease;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 32px 20px 48px;
+  background: var(--page);
+  color: var(--text);
+  transition: background-color 240ms ease, color 240ms ease;
+}
+
+button {
+  font: inherit;
+}
+
+.app {
+  width: min(100%, 720px);
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+.brand {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 650;
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    opacity 140ms ease;
+}
+
+.theme-toggle:hover {
+  background: var(--button-hover);
+}
+
+.theme-toggle:focus-visible,
+.button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+.theme-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.intro {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(2.2rem, 8vw, 3.7rem);
+  font-weight: 750;
+  letter-spacing: -0.075em;
+  line-height: 1;
+}
+
+.subtitle {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.timer-panel {
+  padding: clamp(32px, 8vw, 58px) 20px 28px;
+  text-align: center;
+}
+
+.timer-label {
+  margin: 0 0 25px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.timer {
+  display: block;
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(2.05rem, 9vw, 4.4rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: color 240ms ease;
+}
+
+.timer-hint {
+  margin: 14px 0 0;
+  color: var(--subtle);
+  font-size: 0.76rem;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.status::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--status-dot);
+  content: "";
+  transition: background-color 240ms ease;
+}
+
+.status.is-running::before {
+  background: var(--text);
+}
+
+.status.is-error {
+  color: var(--text);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 0 20px 28px;
+}
+
+.button {
+  min-height: 45px;
+  padding: 10px 18px;
+  border: 1px solid var(--text);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 650;
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    opacity 140ms ease;
+}
+
+.button-primary {
+  min-width: 136px;
+  background: var(--text);
+  color: var(--surface);
+}
+
+.button-primary:hover:not(:disabled) {
+  background: var(--button-primary-hover);
+  border-color: var(--button-primary-hover);
+  color: var(--page);
+}
+
+.button:not(.button-primary):hover:not(:disabled) {
+  background: var(--button-hover);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.38;
+}
+
+.section {
+  margin-top: 20px;
+  padding: 20px 22px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.count {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 16px 0 6px;
+  color: var(--subtle);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.list {
+  max-height: 260px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 0;
+  border-top: 1px solid var(--separator);
+  transition: border-color 240ms ease;
+}
+
+.list-item:first-child {
+  border-top: 0;
+}
+
+.item-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.item-value {
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.item-total {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.footer {
+  margin: 26px 0 0;
+  color: var(--subtle);
+  font-size: 0.74rem;
+  text-align: center;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 24px 14px 36px;
+  }
+
+  .topbar {
+    margin-bottom: 48px;
+  }
+
+  .section {
+    padding: 18px 16px;
+  }
+
+  .controls {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .button {
+    flex: 1 1 auto;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .button-primary {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.world-clock-sync {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.world-clock-form {
+  margin-bottom: 12px;
+}
+
+.world-clock-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.world-clock-search-row {
+  display: flex;
+  gap: 8px;
+}
+
+.world-clock-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.84rem;
+}
+
+.world-clock-input:focus-visible,
+.world-clock-add:focus-visible,
+.world-clock-remove:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.world-clock-add,
+.world-clock-remove {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--text);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.world-clock-add:hover,
+.world-clock-remove:hover {
+  background: var(--button-hover);
+}
+
+.world-clock-message {
+  min-height: 1.2em;
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.world-clock-message.is-error {
+  color: var(--text);
+}
+
+.world-clock-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.world-clock-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 10px;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid var(--separator);
+  background: var(--surface);
+}
+
+.world-clock-details {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.world-clock-city {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.world-clock-country,
+.world-clock-zone {
+  overflow: hidden;
+  color: var(--subtle);
+  font-size: 0.68rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.world-clock-time {
+  grid-column: 1 / -1;
+  margin-top: 5px;
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: clamp(1.35rem, 5vw, 1.8rem);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.06em;
+}
+
+.world-clock-date {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.world-clock-remove {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 32px;
+  padding: 5px 8px;
+  font-size: 0.7rem;
+}
+
+.world-clock-zone {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 520px) {
+  .world-clock-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .world-clock-search-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .world-clock-add {
+    width: 100%;
+  }
+}
